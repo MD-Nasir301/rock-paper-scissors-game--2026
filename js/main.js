@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const clickCountDisplay = document.getElementById("clcik_count");
 
   // Variables
-  let choices = ["Rock", "Paper", "Sezer"];
+  let choices = ["Rock", "Paper", "Scissors"];
   let playerScore = 0;
   let computerScore = 0;
   let drawScore = 0;
@@ -90,9 +90,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if ((playerChoice === "Rock") & (computerChoice === "Paper")) {
         computerWinFunc();
-      } else if ((playerChoice === "Paper") & (computerChoice === "Sezer")) {
+      } else if ((playerChoice === "Paper") & (computerChoice === "Scissors")) {
         computerWinFunc();
-      } else if ((playerChoice === "Sezer") & (computerChoice === "Rock")) {
+      } else if ((playerChoice === "Scissors") & (computerChoice === "Rock")) {
         computerWinFunc();
       } else if (playerChoice === computerChoice) {
         drawFun();
@@ -235,7 +235,7 @@ introTL
     "-=1.5"
   )
   .from(
-    ".sezer",
+    ".Scissors",
     {
       duration: 1.5,
       opacity: 0,
@@ -245,7 +245,7 @@ introTL
     "-=1.5"
   )
 
-  .set(".rock, .paper, .sezer", { opacity: 1 });
+  .set(".rock, .paper, .Scissors", { opacity: 1 });
 
 const loopTL = gsap.timeline({
   repeat: -1,
@@ -253,17 +253,17 @@ const loopTL = gsap.timeline({
 });
 
 loopTL
-  .to(".rock, .paper, .sezer", {
+  .to(".rock, .paper, .Scissors", {
     rotation: 30,
     ease: "bounce.out",
     duration: 2,
   })
-  .to(".rock, .paper, .sezer", {
+  .to(".rock, .paper, .Scissors", {
     rotation: -30,
     ease: "bounce.out",
     duration: 2,
   })
-  .to(".rock, .paper, .sezer", {
+  .to(".rock, .paper, .Scissors", {
     rotation: 0,
     ease: "bounce.out",
     duration: 2,
@@ -274,7 +274,7 @@ const newGameBtnTL = gsap.timeline({
 });
 
 newGameBtnTL.fromTo(
-  ".rock, .paper, .sezer",
+  ".rock, .paper, .Scissors",
   {
     y: -300,
     rotation: 360,
@@ -295,7 +295,7 @@ const gameOverTL = gsap.timeline({
 });
 
 gameOverTL.fromTo(
-  ".rock, .paper, .sezer",
+  ".rock, .paper, .Scissors",
   {
     y: 0,
     duration: 1,
