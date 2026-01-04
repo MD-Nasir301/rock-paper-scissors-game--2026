@@ -65,16 +65,17 @@ window.addEventListener("DOMContentLoaded", () => {
       playerNameDisplay.textContent = playerName;
     }
   });
+
   // Update winning score display
   winingScoreInput.addEventListener("input", () => {
     winingScore = winingScoreInput.value;
     winingScoreDisplay.textContent = winingScore;
   });
-  // Settings button to toggle nav bar
+
+  // Settings button to toggle sidebar
   settins.addEventListener("click", () => {
     if (settinsHide) {
       navBar.style.left = "0";
-      //Li Animation
       settingTL.restart();
       settinsHide = false;
     } else {
@@ -82,17 +83,21 @@ window.addEventListener("DOMContentLoaded", () => {
       settinsHide = true;
     }
   });
+
   // Main Game Logic --------------
   keys.forEach((key) => {
     key.addEventListener("click", () => {
+      // Update some variables and display.
       playerChoice = key.dataset.value;
       playerChoiceDisplay.textContent = playerChoice;
       computerChoiceFunc();
       updateClickCount();
       newGameBtn.disabled = false;
-      resetBtn.disabled = false;
       newGameBtn.textContent = "New Game";
+      resetBtn.disabled = false;
+      newBtnTL.restart();
       resetBtn.textContent = "Reset Game";
+      // Game Logic
       if ((playerChoice === "Rock") & (computerChoice === "Paper")) {
         computerWinFunc();
       } else if ((playerChoice === "Paper") & (computerChoice === "Scissors")) {
@@ -207,6 +212,7 @@ window.addEventListener("DOMContentLoaded", () => {
     newGameBtn.disabled = true;
     resetBtn.disabled = true;
     newGameBtn.textContent = "New Game 🚫";
+    newBtnTL.pause();
     resetBtn.textContent = "Reset Game 🚫";
   });
 
@@ -259,6 +265,7 @@ introTL
 const loopTL = gsap.timeline({
   repeat: -1,
   repeatDelay: 1,
+  delay: 3.5,
 });
 
 loopTL
@@ -384,7 +391,7 @@ gsap.from("#new-btn", {
   delay: 1,
 });
 
-gsap.to("#new-btn", {
+const newBtnTL = gsap.to("#new-btn", {
   duration: 1,
   scaleX: 1.2,
   opacity: 1,
@@ -392,7 +399,9 @@ gsap.to("#new-btn", {
   yoyo: true,
   repeat: -1,
   delay: 2,
+  paused: true,
 });
+
 gsap.to("#btn-bg-music", {
   duration: 1,
   scaleX: 1.7,
@@ -410,7 +419,6 @@ gsap.from("#reset-btn", {
   opacity: 1,
   ease: "power1.inOut",
 });
-
 
 gsap.from(".total_click", {
   duration: 1,
