@@ -38,6 +38,8 @@ window.addEventListener("DOMContentLoaded", () => {
   let bgMusicOn = false;
   let totalClicks = 0;
   let playerName = "";
+  newGameBtn.disabled = true;
+  resetBtn.disabled = true;
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
@@ -87,7 +89,10 @@ window.addEventListener("DOMContentLoaded", () => {
       playerChoiceDisplay.textContent = playerChoice;
       computerChoiceFunc();
       updateClickCount();
-
+      newGameBtn.disabled = false;
+      resetBtn.disabled = false;
+      newGameBtn.textContent = "New Game";
+      resetBtn.textContent = "Reset Game";
       if ((playerChoice === "Rock") & (computerChoice === "Paper")) {
         computerWinFunc();
       } else if ((playerChoice === "Paper") & (computerChoice === "Scissors")) {
@@ -199,6 +204,10 @@ window.addEventListener("DOMContentLoaded", () => {
     finalResulMsgtDisplay.style.top = "50%";
     newGameBtnTL.restart();
     winScoreUpdateDisable();
+    newGameBtn.disabled = true;
+    resetBtn.disabled = true;
+    newGameBtn.textContent = "New Game 🚫";
+    resetBtn.textContent = "Reset Game 🚫";
   });
 
   resetBtn.addEventListener("click", () => {
@@ -401,14 +410,7 @@ gsap.from("#reset-btn", {
   opacity: 1,
   ease: "power1.inOut",
 });
-gsap.to("#reset-btn", {
-  duration: 1,
-  yoyo: true,
-  repeat: -1,
-  opacity: 1,
-  color: "black",
-  ease: "power1.inOut",
-});
+
 
 gsap.from(".total_click", {
   duration: 1,
