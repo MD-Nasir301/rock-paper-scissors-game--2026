@@ -1,0 +1,246 @@
+/* ========== CSS VARIABLES ========== */
+
+/* ========== MAIN CSS START HERE ========== */
+/* Add your custom styles below this line */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+p,
+span {
+  margin: 5px;
+  font-size: 20px;
+}
+.mr-0 {
+  margin: 0;
+}
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4d0d0;
+  color: white;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* settings css here */
+.settings_icons {
+  position: absolute;
+  top: 5%;
+  left: 13%;
+  z-index: 1000;
+  padding: 5px 10px;
+}
+.settings_icons > img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1000;
+}
+
+.musicOff_icon::after {
+  content: "";
+  position: absolute;
+  top: 61px;
+  right: 20px;
+  width: 4px;
+  height: 28px;
+  rotate: -45deg;
+  background: #301f1f;
+  z-index: -10;
+}
+
+/* side-bar options area css here -------- */
+.side-nav {
+  background: #443c4a;
+  position: relative;
+  left: 25%;
+  right: 0;
+  padding-top: 20px;
+  transition: 1s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.side-nav ul {
+  list-style: none;
+  padding: 20px;
+}
+.side-nav ul li {
+  margin-bottom: 35px;
+  padding: 2px 10px;
+  background: #fcebb5;
+  border-radius: 25px;
+  color: black;
+}
+.side-nav ul li input {
+  width: 65px;
+  border: none;
+  background: #714c4c;
+  color: yellow;
+  padding: 2px 5px 2px 10px;
+  font-weight: bold;
+  border-radius: 20px;
+}
+.player-name-area span {
+  display: inline-block;
+  margin-top: 5px;
+}
+#player-name-input {
+  width: 90px;
+}
+.wining-score {
+  color: rgb(203, 171, 171);
+}
+
+/* game-area Section css here -------- */
+.game_section {
+  display: flex;
+  height: 100vh;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.game-area {
+  padding: 5px 40px;
+  background: rgb(93, 60, 60);
+  min-height: 93%;
+  width: 60%;
+  position: relative;
+}
+#final_result_show {
+  background: #833ab4;
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+  width: 89%;
+  font-weight: bold;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  bottom: 54%;
+  left: 5%;
+  z-index: 5000;
+  transition: 0.6s;
+}
+
+.nav-area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  color: rgba(255, 255, 0, 0.771);
+  font-weight: bold;
+}
+
+.game_options_area {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2000;
+}
+
+.key {
+  padding: 0px;
+  background: green;
+  width: 25vh;
+  height: 25vh;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.key img {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+  transition: 0.6s;
+}
+.key:hover {
+  cursor: pointer;
+  box-shadow: 2px 6px 12px #ffffff8a;
+  border: 1px solid red;
+}
+.key:active {
+  box-shadow: 2px 6px 12px #acff06;
+}
+
+.game_result_area {
+  background: gray;
+  padding: 20px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 6000;
+}
+.choice_area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.count_area {
+  display: flex;
+  justify-content: space-between;
+}
+
+#computer_result,
+#player_result,
+#draw_result {
+  color: yellow;
+  font-weight: bold;
+  min-width: 30px;
+  display: inline-block;
+}
+
+#result_message {
+  font-weight: bold;
+  color: yellow;
+}
+#player_choice,
+#computer_choice {
+  min-width: 50px;
+  display: inline-block;
+  color: yellow;
+  font-weight: bold;
+}
+
+.btn {
+  display: block;
+  margin: 20px auto 0;
+  background: green;
+  color: white;
+  font-weight: bold;
+  padding: 5px 15px;
+  letter-spacing: 3px;
+}
+.btn#reset-btn {
+  margin: 0;
+  letter-spacing: 0;
+  font-weight: bold;
+  font-size: 15px;
+}
+.btn:hover {
+  background: lab(80.73% -61.37 77.61 / 0.424);
+  color: white;
+}
+
+.total_click {
+  text-align: right;
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: yellow;
+}
+/* ===========================================================
+   End of Stylesheet
+   =========================================================== */
