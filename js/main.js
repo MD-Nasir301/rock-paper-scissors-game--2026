@@ -19,10 +19,14 @@ window.addEventListener("DOMContentLoaded", () => {
   const winingScoreDisplay = document.getElementById("wining-score-show");
   const settins = document.getElementById("settings");
   const navBar = document.getElementById("side-nav");
-  const bgMusicAudio = document.getElementById("bg-music-audio");
   const btnBgMusic = document.getElementById("btn-bg-music");
   const musicOff_icon = document.getElementById("setting_icon");
   const clickCountDisplay = document.getElementById("clcik_count");
+  const bgMusicAudio = document.getElementById("bg-music-audio");
+  const btnClicked = document.getElementById("btn_click_audio");
+  const optionSelected = document.getElementById("option_select");
+  const gameLostAudio = document.getElementById("gameLost");
+  const gameWinAudio = document.getElementById("winGame");
 
   // Variables
   let choices = ["Rock", "Paper", "Scissors"];
@@ -78,6 +82,7 @@ window.addEventListener("DOMContentLoaded", () => {
       navBar.style.left = "0";
       settingTL.restart();
       settinsHide = false;
+      btnClicked.play();
     } else {
       navBar.style.left = "25%";
       settinsHide = true;
@@ -90,6 +95,7 @@ window.addEventListener("DOMContentLoaded", () => {
       // Update some variables and display.
       playerChoice = key.dataset.value;
       playerChoiceDisplay.textContent = playerChoice;
+      optionSelected.play();
       computerChoiceFunc();
       updateClickCount();
       newGameBtn.disabled = false;
@@ -150,6 +156,7 @@ window.addEventListener("DOMContentLoaded", () => {
   function finalResustFunc() {
     if (playerScore == winingScore) {
       gameOverTL.restart();
+      gameWinAudio.play();
       playerScore = 0;
       computerScore = 0;
       playerFinalResult++;
@@ -167,6 +174,7 @@ window.addEventListener("DOMContentLoaded", () => {
       playerScore = 0;
       computerScore = 0;
       computerFinalResult++;
+      gameLostAudio.play();
       finalResulMsgtDisplay.style.top = "10%";
       finalResulMsgtDisplay.style.color = "darkred";
       finalResulMsgtDisplay.textContent = "Oops! " + playerName + "! You lost.";
@@ -214,6 +222,7 @@ window.addEventListener("DOMContentLoaded", () => {
     newGameBtn.textContent = "New Game 🚫";
     newBtnTL.pause();
     resetBtn.textContent = "Reset Game 🚫";
+    btnClicked.play();
   });
 
   resetBtn.addEventListener("click", () => {
