@@ -188,6 +188,7 @@ window.addEventListener("DOMContentLoaded", () => {
       inputDisableMsg.innerHTML =
         "Game in progress... <br> Winning score  cannot <br> be changed now.";
       inputDisableMsg.style.textAlign = "center";
+      inputDisableMsg.style.color = "red";
       inputDisableMsg.style.marginBottom = "10px";
       inputDisableMsg.style.fontSize = "15px";
     } else {
