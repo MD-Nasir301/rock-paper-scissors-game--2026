@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Variables
   let choices = ["Rock", "Paper", "Scissors"];
   let playerScore = 0;
-  let computerScore = 0;
+  let computerScore = 1;
   let drawScore = 0;
   let playerChoice = null;
   let computerChoice = null;
