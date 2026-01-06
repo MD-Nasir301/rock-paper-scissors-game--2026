@@ -145,27 +145,34 @@ body {
 
 .game_options_area {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   position: relative;
   z-index: 2000;
 }
 
 .key {
+  margin: 5px 25px;
   padding: 0px;
   background: green;
   width: 25vh;
   height: 25vh;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 .key img {
   width: 100%;
   border-radius: 50%;
   height: 100%;
   transition: 0.6s;
+}
+.key.option {
+  height: fit-content;
+  background: none;
+  margin: 5px 0 0 0;
+  opacity: 0;
+  color: rgba(68, 243, 15, 0.422);
 }
 .key:hover {
   cursor: pointer;
@@ -174,6 +181,10 @@ body {
 }
 .key:active {
   box-shadow: 2px 6px 12px #acff06;
+}
+.key.option:hover {
+  box-shadow: none;
+  border: none;
 }
 
 .game_result_area {

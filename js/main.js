@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", () => {
-  //First Line
+  // All DOM elements
   const keys = document.querySelectorAll(".key");
   const playerScoreDisplay = document.getElementById("player_result");
   const drawScoreDisplay = document.getElementById("draw_result");
@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const musicOff_icon = document.getElementById("setting_icon");
   const clickCountDisplay = document.getElementById("clcik_count");
   const bgMusicAudio = document.getElementById("bg-music-audio");
-  const btnClicked = document.getElementById("btn_click_audio");
+  const btnClickedSound = document.getElementById("btn_click_audio");
   const optionSelected = document.getElementById("option_select");
   const gameLostAudio = document.getElementById("gameLost");
   const gameWinAudio = document.getElementById("winGame");
@@ -38,10 +38,11 @@ window.addEventListener("DOMContentLoaded", () => {
   let playerFinalResult = 0;
   let computerFinalResult = 0;
   let winingScore = winingScoreInput.value;
-  let settinsHide = true;
+  let isSettinsHide = true;
   let bgMusicOn = false;
   let totalClicks = 0;
   let playerName = "";
+  // Game Start
   newGameBtn.disabled = true;
   resetBtn.disabled = true;
 
@@ -78,14 +79,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Settings button to toggle sidebar
   settins.addEventListener("click", () => {
-    if (settinsHide) {
+    if (isSettinsHide) {
       navBar.style.left = "0";
-      settingTL.restart();
-      settinsHide = false;
-      btnClicked.play();
+      settingListAnimate.restart();
+      isSettinsHide = false;
+      btnClickedSound.play();
     } else {
       navBar.style.left = "25%";
-      settinsHide = true;
+      isSettinsHide = true;
+      btnClickedSound.play();
     }
   });
 
@@ -223,7 +225,7 @@ window.addEventListener("DOMContentLoaded", () => {
     newGameBtn.textContent = "New Game 🚫";
     newBtnTL.pause();
     resetBtn.textContent = "Reset Game 🚫";
-    btnClicked.play();
+    btnClickedSound.play();
   });
 
   resetBtn.addEventListener("click", () => {
@@ -383,7 +385,7 @@ gsap.from("#settings", {
   ease: "linear",
 });
 
-const settingTL = gsap.from(".side-nav ul li", {
+const settingListAnimate = gsap.from(".side-nav ul li", {
   duration: 0.5,
   delay: 0.7,
   x: 300,
@@ -437,3 +439,18 @@ gsap.from(".total_click", {
   ease: "bounce",
   delay: 2,
 });
+
+const optionTL = gsap.timeline({
+  repeat: -1,
+  delay: 3,
+});
+
+optionTL
+  .to(".name-rock", { opacity: 1, duration: 0.7 })
+  .to(".name-rock", { opacity: 0, duration: 0.1 })
+
+  .to(".name-paper", { opacity: 1, duration: 0.7 })
+  .to(".name-paper", { opacity: 0, duration: 0.1 })
+
+  .to(".name-scissors", { opacity: 1, duration: 0.7 })
+  .to(".name-scissors", { opacity: 0, duration: 0.1 });
