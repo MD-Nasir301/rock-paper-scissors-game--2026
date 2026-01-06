@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Variables
   let choices = ["Rock", "Paper", "Scissors"];
   let playerScore = 0;
-  let computerScore = 0;
+  let computerScore = 1;
   let drawScore = 0;
   let playerChoice = null;
   let computerChoice = null;
@@ -45,6 +45,9 @@ window.addEventListener("DOMContentLoaded", () => {
   // Game Start
   newGameBtn.disabled = true;
   resetBtn.disabled = true;
+  computerScore+1
+
+
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
@@ -337,6 +340,21 @@ gameOverTL.fromTo(
   }
 );
 
+const nameOptionTL = gsap.timeline({
+  repeat: -1,
+  delay: 3,
+});
+
+nameOptionTL
+  .to(".name-rock", { opacity: 1, duration: 0.7 })
+  .to(".name-rock", { opacity: 0, duration: 0.1 })
+
+  .to(".name-paper", { opacity: 1, duration: 0.7 })
+  .to(".name-paper", { opacity: 0, duration: 0.1 })
+
+  .to(".name-scissors", { opacity: 1, duration: 0.7 })
+  .to(".name-scissors", { opacity: 0, duration: 0.1 });
+
 gsap.from(".game_result_area", {
   duration: 1,
   delay: 1,
@@ -440,17 +458,6 @@ gsap.from(".total_click", {
   delay: 2,
 });
 
-const optionTL = gsap.timeline({
-  repeat: -1,
-  delay: 3,
-});
 
-optionTL
-  .to(".name-rock", { opacity: 1, duration: 0.7 })
-  .to(".name-rock", { opacity: 0, duration: 0.1 })
 
-  .to(".name-paper", { opacity: 1, duration: 0.7 })
-  .to(".name-paper", { opacity: 0, duration: 0.1 })
 
-  .to(".name-scissors", { opacity: 1, duration: 0.7 })
-  .to(".name-scissors", { opacity: 0, duration: 0.1 });

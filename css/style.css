@@ -8,6 +8,11 @@
   box-sizing: border-box;
   user-select: none;
 }
+img {
+    user-drag: none;
+  -webkit-user-drag: none;
+  pointer-events: none
+}
 
 p,
 span {
@@ -23,6 +28,7 @@ body {
   color: white;
   overflow-x: hidden;
   position: relative;
+
 }
 
 /* settings css here */
