@@ -45,6 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Game Start
   newGameBtn.disabled = true;
   resetBtn.disabled = true;
+  
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
