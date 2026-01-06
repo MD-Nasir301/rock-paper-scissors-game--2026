@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Variables
   let choices = ["Rock", "Paper", "Scissors"];
   let playerScore = 0;
-  let computerScore = 1;
+  let computerScore = 0;
   let drawScore = 0;
   let playerChoice = null;
   let computerChoice = null;
@@ -45,9 +45,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Game Start
   newGameBtn.disabled = true;
   resetBtn.disabled = true;
-  computerScore+1
-
-
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
