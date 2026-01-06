@@ -45,9 +45,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Game Start
   newGameBtn.disabled = true;
   resetBtn.disabled = true;
-  computerScore+1
-
-
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
