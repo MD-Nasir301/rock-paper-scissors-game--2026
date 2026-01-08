@@ -39,8 +39,8 @@ window.addEventListener("DOMContentLoaded", () => {
   let drawScore = 0;
   let playerChoice = null;
   let computerChoice = null;
-  let playerFinalResult = 0;
-  let computerFinalResult = 0;
+  let playerFinalScore = 0;
+  let computerFinalScore = 0;
   let winingScore = winingScoreInput.value;
   let isSettinsHide = false;
   let bgMusicOn = false;
@@ -62,7 +62,6 @@ window.addEventListener("DOMContentLoaded", () => {
     "Congratulations🎉" + playerName + "." + "</br>" + " You are a winner.😊";
   let loseMsg = "Oops! " + playerName + "! You lost.";
   let timeOutMsg = "Oops! Time's up " + playerName + "! You lost.";
- 
 
   //===============================================================================
   // Game Settings hard Version
@@ -207,6 +206,9 @@ window.addEventListener("DOMContentLoaded", () => {
     timerDisplay.style.transition = "height 10500ms linear";
     if (timeLeft < 0) {
       return;
+    } else if (timeLeft < 51) {
+      console.log("less than 50");
+      timerDisplay.style.backgroundColor = "#2c2a27";
     }
 
     timerDisplay.style.setProperty("--timeLeftValue", `"${timeLeft}"`);
@@ -247,12 +249,16 @@ window.addEventListener("DOMContentLoaded", () => {
     playerScore = 0;
     computerScore = 0;
     if (msg == winMsg) {
-      playerFinalResult++;
-      playerFinalResultDiplay.textContent = playerFinalResult;
+      playerFinalScore++;
+      playerFinalResultDiplay.textContent = playerFinalScore;
     } else if (msg == loseMsg) {
-      computerFinalResult++;
-      computerFinalResultDisplay.textContent = computerFinalResult;
+      computerFinalScore++;
+      computerFinalResultDisplay.textContent = computerFinalScore;
+    } else if (msg == timeOutMsg) { 
+      computerFinalScore++;
+      computerFinalResultDisplay.textContent = computerFinalScore;
     }
+
     finalResulMsgtDisplay.innerHTML = msg;
     finalResulMsgtDisplay.style.top = "10%";
     finalResulMsgtDisplay.style.color = color;
@@ -301,6 +307,7 @@ window.addEventListener("DOMContentLoaded", () => {
     clearTimeout(timeDisplayID);
     timerDisplay.style.height = "90%";
     timeLeft = 100;
+    timerDisplay.style.backgroundColor = "red";
     timerDisplay.style.setProperty("--timeLeftValue", `"100"`);
     timerDisplay.style.transition = "height 600ms linear";
   });
@@ -383,7 +390,7 @@ newGameBtnTL.fromTo(
     rotation: 360,
     ease: "bounce",
     duration: 1.5,
-    opacity: 0, 
+    opacity: 0,
   },
   {
     y: 0,
