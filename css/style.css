@@ -9,7 +9,7 @@
   user-select: none;
 }
 img {
-    user-drag: none;
+  user-drag: none;
   -webkit-user-drag: none;
 }
 
@@ -27,7 +27,6 @@ body {
   color: white;
   overflow-x: hidden;
   position: relative;
-
 }
 
 /* settings css here */
@@ -64,7 +63,7 @@ body {
 .side-nav {
   background: #443c4a;
   position: relative;
-  left: 25%;
+  left: 0%;
   right: 0;
   padding-top: 20px;
   transition: 1s;
@@ -72,6 +71,16 @@ body {
   display: flex;
   align-items: center;
 }
+.side-nav::after {
+  content: var(--settingsMsg);
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+  color: white;
+}
+
 .side-nav ul {
   list-style: none;
   padding: 20px;
@@ -101,6 +110,17 @@ body {
 }
 .wining-score {
   color: rgb(203, 171, 171);
+}
+.side-nav ul:last-child {
+  text-align: center;
+}
+.level-selected {
+  background: #714c4c;
+  color: navajowhite;
+  padding: 0 18px;
+  border-radius: 20px;
+  width: 80px;
+  display: inline-block;
 }
 
 /* game-area Section css here -------- */
@@ -139,7 +159,27 @@ body {
   z-index: 5000;
   transition: 0.6s;
 }
-
+.timer {
+  width: 40px;
+  margin: 10px;
+  height: 90%;
+  background: red;
+  position: absolute;
+  visibility: hidden;
+  bottom: 0;
+  left: 80%;
+}
+.timer::after {
+  content: var(--timeLeftValue);
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 25px;
+  color: darkred;
+  z-index: 1000;
+  font-weight: bold;
+}
 .nav-area {
   display: flex;
   justify-content: space-between;
@@ -152,7 +192,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   position: relative;
   z-index: 2000;
 }
@@ -177,7 +217,7 @@ body {
   background: none;
   margin: 5px 0 0 0;
   opacity: 0;
-  color: rgba(68, 243, 15, 0.422);
+  color: rgba(109, 130, 103, 0.901);
 }
 .key:hover {
   cursor: pointer;
@@ -230,26 +270,38 @@ body {
   font-weight: bold;
 }
 
+.footer-btns {
+  display: flex;
+  justify-content: space-between;
+}
 .btn {
   display: block;
-  margin: 20px auto 0;
+  margin: 0px;
   background: green;
   color: white;
   font-weight: bold;
   padding: 5px 15px;
-  letter-spacing: 3px;
+  letter-spacing: 0px;
+  opacity: 1 !important;
 }
-.btn#reset-btn {
-  margin: 0;
-  letter-spacing: 0;
-  font-weight: bold;
-  font-size: 15px;
+.btn#game-start {
+  margin: 20px auto;
 }
+
 .btn:hover {
   background: lab(80.73% -61.37 77.61 / 0.424);
   color: white;
 }
 
+.game-level-display {
+  margin: 2px auto;
+  font-weight: bold;
+  color: rgb(196, 196, 194);
+  font-size: 20px;
+}
+.game-level-display span {
+  color: yellow;
+}
 .total_click {
   text-align: right;
   margin-top: 10px;

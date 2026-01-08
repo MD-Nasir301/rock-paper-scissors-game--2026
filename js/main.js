@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const resultmessageDisplay = document.getElementById("result_message");
   const playerChoiceDisplay = document.getElementById("player_choice");
   const computerChoiceDisplay = document.getElementById("computer_choice");
+  const gameStarBtn = document.getElementById("game-start");
   const newGameBtn = document.getElementById("new-btn");
   const resetBtn = document.getElementById("reset-btn");
   const finalResulMsgtDisplay = document.getElementById("final_result_show");
@@ -19,6 +20,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const winingScoreDisplay = document.getElementById("wining-score-show");
   const settins = document.getElementById("settings");
   const navBar = document.getElementById("side-nav");
+  const gamelevel = document.querySelectorAll(".game-level");
+  const gameLevelDisplay = document.getElementById("display-level");
+  const timerDisplay = document.getElementById("timer");
   const btnBgMusic = document.getElementById("btn-bg-music");
   const musicOff_icon = document.getElementById("setting_icon");
   const clickCountDisplay = document.getElementById("clcik_count");
@@ -28,26 +32,128 @@ window.addEventListener("DOMContentLoaded", () => {
   const gameLostAudio = document.getElementById("gameLost");
   const gameWinAudio = document.getElementById("winGame");
 
-  // Variables
+  // Game initial variables
   let choices = ["Rock", "Paper", "Scissors"];
   let playerScore = 0;
-  let computerScore = 1;
+  let computerScore = 0;
   let drawScore = 0;
   let playerChoice = null;
   let computerChoice = null;
   let playerFinalResult = 0;
   let computerFinalResult = 0;
   let winingScore = winingScoreInput.value;
-  let isSettinsHide = true;
+  let isSettinsHide = false;
   let bgMusicOn = false;
   let totalClicks = 0;
   let playerName = "";
-  // Game Start
+  let isGameStar = false;
+  let isHardVersion = false;
+  let setGameTimeOutID = null;
+  let timeLeft = 100;
+  let timeDisplayID = null;
+
+  // GAME ONLOAD CONFIGURATION
   newGameBtn.disabled = true;
-  resetBtn.disabled = true;
-  computerScore+1
+  navBar.style.setProperty("--settingsMsg", `"Settings"`);
 
+  // Final Messages =======Player Name সমস্যা এর সমাধান করতে হবে  =========================
+  // আগুমেন্ট হিসেবে playerName পাঠাতে হবে ফাংশনে।
+  let winMsg =
+    "Congratulations🎉" + playerName + "." + "</br>" + " You are a winner.😊";
+  let loseMsg = "Oops! " + playerName + "! You lost.";
+  let timeOutMsg = "Oops! Time's up " + playerName + "! You lost.";
+ 
 
+  //===============================================================================
+  // Game Settings hard Version
+  gamelevel.forEach((level) => {
+    level.addEventListener("click", () => {
+      userSelectedLevel = level.dataset.level;
+      gamelevel.forEach((l) => l.classList.remove("level-selected"));
+
+      level.classList.add("level-selected");
+
+      if (userSelectedLevel === "hard" && isGameStar === false) {
+        isHardVersion = true;
+        gameLevelDisplay.textContent = "Hard";
+        timerDisplay.style.visibility = "visible";
+      } else {
+        isHardVersion = false;
+        gameLevelDisplay.textContent = "Easy";
+        timerDisplay.style.visibility = "hidden";
+      }
+    });
+  });
+
+  // Game Start
+  gameStarBtn.addEventListener("click", () => {
+    isGameStar = true;
+    nameOptionTL.restart();
+    gameStarBtn.style.visibility = "hidden";
+    navBar.style.pointerEvents = "none";
+    navBar.style.setProperty("--settingsMsg", `'Disable Settings'`);
+    navBar.style.color = "gray";
+    timerDisplay.style.height = "0%";
+    btnEnable();
+
+    // For Hard Version
+    if (isHardVersion && isGameStar) {
+      startTimer();
+      setGameTimeOutID = setTimeout(() => {
+        computerScore = winingScore;
+        finalResustFunc(timeOutMsg, "darkred", gameLostAudio);
+        btnEnable();
+        isGameStar = true;
+      }, 10500);
+    }
+  });
+
+  // Main Game Logic --------------
+
+  keys.forEach((key) => {
+    key.addEventListener("click", () => {
+      if (isGameStar) {
+        // Update some variables and display.
+        playerChoice = key.dataset.value;
+        playerChoiceDisplay.textContent = playerChoice;
+        optionSelected.play();
+        computerChoiceFunc();
+        updateClickCount();
+
+        // Game Logic
+        if ((playerChoice === "Rock") & (computerChoice === "Paper")) {
+          computerWinFunc();
+        } else if (
+          (playerChoice === "Paper") &
+          (computerChoice === "Scissors")
+        ) {
+          computerWinFunc();
+        } else if (
+          (playerChoice === "Scissors") &
+          (computerChoice === "Rock")
+        ) {
+          computerWinFunc();
+        } else if (playerChoice === computerChoice) {
+          drawFun();
+        } else {
+          playerWinFunc();
+        }
+        if (playerScore == winingScore) {
+          finalResustFunc(winMsg, "yellow", gameWinAudio);
+        }
+        if (computerScore == winingScore) {
+          finalResustFunc(loseMsg, "darkred", gameLostAudio);
+        }
+
+        setTimeout(function () {
+          resultmessageDisplay.textContent = "--------------";
+          resultmessageDisplay.style.color = "yellow";
+          resultmessageDisplay.style.textAlign = "center";
+        }, 1000);
+      }
+    });
+  });
+  // End of Game Logic --------------
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
@@ -62,7 +168,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Update player name display
+  // Display and input player name
   playerNameInput.addEventListener("input", () => {
     playerName = playerNameInput.value.trim();
     if (playerName.length === 0) {
@@ -74,7 +180,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Update winning score display
+  // Input and Update wining score
   winingScoreInput.addEventListener("input", () => {
     winingScore = winingScoreInput.value;
     winingScoreDisplay.textContent = winingScore;
@@ -84,7 +190,6 @@ window.addEventListener("DOMContentLoaded", () => {
   settins.addEventListener("click", () => {
     if (isSettinsHide) {
       navBar.style.left = "0";
-      settingListAnimate.restart();
       isSettinsHide = false;
       btnClickedSound.play();
     } else {
@@ -94,49 +199,28 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Main Game Logic --------------
-  keys.forEach((key) => {
-    key.addEventListener("click", () => {
-      // Update some variables and display.
-      playerChoice = key.dataset.value;
-      playerChoiceDisplay.textContent = playerChoice;
-      optionSelected.play();
-      computerChoiceFunc();
-      updateClickCount();
-      newGameBtn.disabled = false;
-      newGameBtn.textContent = "New Game";
-      resetBtn.disabled = false;
-      newBtnTL.restart();
-      resetBtn.textContent = "Reset Game";
-      // Game Logic
-      if ((playerChoice === "Rock") & (computerChoice === "Paper")) {
-        computerWinFunc();
-      } else if ((playerChoice === "Paper") & (computerChoice === "Scissors")) {
-        computerWinFunc();
-      } else if ((playerChoice === "Scissors") & (computerChoice === "Rock")) {
-        computerWinFunc();
-      } else if (playerChoice === computerChoice) {
-        drawFun();
-      } else {
-        playerWinFunc();
-      }
-      finalResustFunc();
-      setTimeout(function () {
-        resultmessageDisplay.textContent = "--------------";
-        resultmessageDisplay.style.color = "yellow";
-        resultmessageDisplay.style.textAlign = "center";
-      }, 1000);
-    });
-  });
+  // All Functions -------------------------====()=>{}=======-----------------------
 
-  // All Functions --------------
+  timerDisplay.style.setProperty("--timeLeftValue", `"100"`);
+  function startTimer() {
+    timeLeft--;
+    timerDisplay.style.transition = "height 10500ms linear";
+    if (timeLeft < 0) {
+      return;
+    }
+
+    timerDisplay.style.setProperty("--timeLeftValue", `"${timeLeft}"`);
+    timeDisplayID = setTimeout(() => {
+      startTimer();
+    }, 100);
+  }
+
   function computerWinFunc() {
     computerScore++;
     computerScoreDisplay.textContent = computerScore;
     resultmessageDisplay.textContent = "Computer Wins!";
     resultmessageDisplay.style.color = "skyblue";
     resultmessageDisplay.style.textAlign = "right";
-    winScoreUpdateDisable();
   }
   function playerWinFunc() {
     playerScore++;
@@ -144,7 +228,6 @@ window.addEventListener("DOMContentLoaded", () => {
     resultmessageDisplay.textContent = "You Win!👍";
     resultmessageDisplay.style.color = "Yellow";
     resultmessageDisplay.style.textAlign = "left";
-    winScoreUpdateDisable();
   }
   function drawFun() {
     resultmessageDisplay.style.color = "yellow";
@@ -158,48 +241,33 @@ window.addEventListener("DOMContentLoaded", () => {
     computerChoice = choices[comChoice];
     computerChoiceDisplay.textContent = computerChoice;
   }
-  function finalResustFunc() {
-    if (playerScore == winingScore) {
-      gameOverTL.restart();
-      gameWinAudio.play();
-      playerScore = 0;
-      computerScore = 0;
+  function finalResustFunc(msg, color, audio) {
+    gameOverTL.restart();
+    audio.play();
+    playerScore = 0;
+    computerScore = 0;
+    if (msg == winMsg) {
       playerFinalResult++;
-      finalResulMsgtDisplay.innerHTML =
-        "Congratulations🎉" +
-        playerName +
-        "." +
-        "</br>" +
-        " You are a winner.😊";
-      finalResulMsgtDisplay.style.top = "10%";
-      finalResulMsgtDisplay.style.color = "yellow";
       playerFinalResultDiplay.textContent = playerFinalResult;
-    } else if (computerScore == winingScore) {
-      gameOverTL.restart();
-      playerScore = 0;
-      computerScore = 0;
+    } else if (msg == loseMsg) {
       computerFinalResult++;
-      gameLostAudio.play();
-      finalResulMsgtDisplay.style.top = "10%";
-      finalResulMsgtDisplay.style.color = "darkred";
-      finalResulMsgtDisplay.textContent = "Oops! " + playerName + "! You lost.";
       computerFinalResultDisplay.textContent = computerFinalResult;
     }
+    finalResulMsgtDisplay.innerHTML = msg;
+    finalResulMsgtDisplay.style.top = "10%";
+    finalResulMsgtDisplay.style.color = color;
+    isGameStar = false;
+    clearTimeout(setGameTimeOutID);
   }
 
-  function winScoreUpdateDisable() {
-    if (playerScore >= 1 || computerScore >= 1) {
-      winingScoreInput.style.visibility = "hidden";
-      inputDisableMsg.innerHTML =
-        "Game in progress... <br> Winning score  cannot <br> be changed now.";
-      inputDisableMsg.style.textAlign = "center";
-      inputDisableMsg.style.color = "red";
-      inputDisableMsg.style.marginBottom = "10px";
-      inputDisableMsg.style.fontSize = "15px";
-    } else {
-      winingScoreInput.style.visibility = "visible";
-      inputDisableMsg.textContent = "";
-    }
+  function btnEnable() {
+    newGameBtn.disabled = false;
+    newGameBtn.textContent = "New Game";
+  }
+  function btnDisable() {
+    newGameBtn.disabled = true;
+
+    newGameBtn.textContent = "New Game 🚫";
   }
 
   function updateClickCount() {
@@ -208,6 +276,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   newGameBtn.addEventListener("click", () => {
+    isGameStar = false;
     playerScore = 0;
     computerScore = 0;
     drawScore = 0;
@@ -221,24 +290,27 @@ window.addEventListener("DOMContentLoaded", () => {
     playerChoiceDisplay.textContent = "--------";
     computerChoiceDisplay.textContent = "--------";
     finalResulMsgtDisplay.style.top = "50%";
+    gameStarBtn.style.visibility = "visible";
     newGameBtnTL.restart();
-    winScoreUpdateDisable();
-    newGameBtn.disabled = true;
-    resetBtn.disabled = true;
-    newGameBtn.textContent = "New Game 🚫";
-    newBtnTL.pause();
-    resetBtn.textContent = "Reset Game 🚫";
+    btnDisable();
     btnClickedSound.play();
+    nameOptionTL.pause(0);
+    navBar.style.pointerEvents = "auto";
+    navBar.style.setProperty("--settingsMsg", `"Settings"`);
+    clearTimeout(setGameTimeOutID);
+    clearTimeout(timeDisplayID);
+    timerDisplay.style.height = "90%";
+    timeLeft = 100;
+    timerDisplay.style.setProperty("--timeLeftValue", `"100"`);
+    timerDisplay.style.transition = "height 600ms linear";
   });
 
   resetBtn.addEventListener("click", () => {
     window.location.reload();
   });
-
-  // Last Line
 });
 
-// gsap animation ------------
+// gsap animation ==================================================================================================================================================================================================================
 gsap.from("#main-content", {
   duration: 0.8,
   opacity: 0.6,
@@ -311,7 +383,7 @@ newGameBtnTL.fromTo(
     rotation: 360,
     ease: "bounce",
     duration: 1.5,
-    opacity: 0,
+    opacity: 0, 
   },
   {
     y: 0,
@@ -343,17 +415,18 @@ gameOverTL.fromTo(
 const nameOptionTL = gsap.timeline({
   repeat: -1,
   delay: 3,
+  paused: true,
 });
 
 nameOptionTL
-  .to(".name-rock", { opacity: 1, duration: 0.7 })
-  .to(".name-rock", { opacity: 0, duration: 0.1 })
+  .to(".name-rock", { opacity: 1, duration: 2 })
+  .to(".name-rock", { opacity: 0, duration: 1 })
 
-  .to(".name-paper", { opacity: 1, duration: 0.7 })
-  .to(".name-paper", { opacity: 0, duration: 0.1 })
+  .to(".name-paper", { opacity: 1, duration: 2 })
+  .to(".name-paper", { opacity: 0, duration: 1 })
 
-  .to(".name-scissors", { opacity: 1, duration: 0.7 })
-  .to(".name-scissors", { opacity: 0, duration: 0.1 });
+  .to(".name-scissors", { opacity: 1, duration: 2 })
+  .to(".name-scissors", { opacity: 0, duration: 1 });
 
 gsap.from(".game_result_area", {
   duration: 1,
@@ -403,13 +476,12 @@ gsap.from("#settings", {
   ease: "linear",
 });
 
-const settingListAnimate = gsap.from(".side-nav ul li", {
-  duration: 0.5,
+gsap.from(".side-nav ul li", {
+  duration: 0.3,
   delay: 0.7,
   x: 300,
-  opacity: 0.5,
+  opacity: 1,
   ease: "none",
-  paused: true,
   stagger: 0.5,
 });
 
@@ -419,17 +491,6 @@ gsap.from("#new-btn", {
   opacity: 1,
   ease: "bounce",
   delay: 1,
-});
-
-const newBtnTL = gsap.to("#new-btn", {
-  duration: 1,
-  scaleX: 1.2,
-  opacity: 1,
-  ease: "bounce",
-  yoyo: true,
-  repeat: -1,
-  delay: 2,
-  paused: true,
 });
 
 gsap.to("#btn-bg-music", {
@@ -457,7 +518,3 @@ gsap.from(".total_click", {
   ease: "bounce",
   delay: 2,
 });
-
-
-
-
