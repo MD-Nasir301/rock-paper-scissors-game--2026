@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const playerScoreDisplay = document.getElementById("player_result");
   const drawScoreDisplay = document.getElementById("draw_result");
   const computerScoreDisplay = document.getElementById("computer_result");
-  const resultmessageDisplay = document.getElementById("result_message");
+  const ResultMsgText = document.getElementById("result_message");
   const playerChoiceDisplay = document.getElementById("player_choice");
   const computerChoiceDisplay = document.getElementById("computer_choice");
   const gameStarBtn = document.getElementById("game-start");
@@ -55,6 +55,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // GAME ONLOAD CONFIGURATION
   newGameBtn.disabled = true;
   navBar.style.setProperty("--settingsMsg", `"Settings"`);
+  timerDisplay.style.setProperty("--timeLeftValue", `"100"`);
 
   // Final Messages =======Player Name সমস্যা এর সমাধান করতে হবে  =========================
   // আগুমেন্ট হিসেবে playerName পাঠাতে হবে ফাংশনে।
@@ -92,23 +93,22 @@ window.addEventListener("DOMContentLoaded", () => {
     navBar.style.pointerEvents = "none";
     navBar.style.setProperty("--settingsMsg", `'Disable Settings'`);
     navBar.style.color = "gray";
-    timerDisplay.style.height = "0%";
     btnEnable();
 
     // For Hard Version
     if (isHardVersion && isGameStar) {
+      timerDisplay.style.height = "0%";
       startTimer();
       setGameTimeOutID = setTimeout(() => {
         computerScore = winingScore;
         finalResustFunc(timeOutMsg, "darkred", gameLostAudio);
         btnEnable();
         isGameStar = true;
-      }, 10500);
+      }, 15500);
     }
   });
 
   // Main Game Logic --------------
-
   keys.forEach((key) => {
     key.addEventListener("click", () => {
       if (isGameStar) {
@@ -145,9 +145,9 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         setTimeout(function () {
-          resultmessageDisplay.textContent = "--------------";
-          resultmessageDisplay.style.color = "yellow";
-          resultmessageDisplay.style.textAlign = "center";
+          ResultMsgText.textContent = "--------------";
+          ResultMsgText.style.color = "yellow";
+          ResultMsgText.style.textAlign = "center";
         }, 1000);
       }
     });
@@ -200,41 +200,39 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // All Functions -------------------------====()=>{}=======-----------------------
 
-  timerDisplay.style.setProperty("--timeLeftValue", `"100"`);
   function startTimer() {
     timeLeft--;
-    timerDisplay.style.transition = "height 10500ms linear";
+    timerDisplay.style.transition = "height 15500ms linear";
     if (timeLeft < 0) {
       return;
     } else if (timeLeft < 51) {
-      console.log("less than 50");
       timerDisplay.style.backgroundColor = "#2c2a27";
     }
 
     timerDisplay.style.setProperty("--timeLeftValue", `"${timeLeft}"`);
     timeDisplayID = setTimeout(() => {
       startTimer();
-    }, 100);
+    }, 150);
   }
 
   function computerWinFunc() {
     computerScore++;
     computerScoreDisplay.textContent = computerScore;
-    resultmessageDisplay.textContent = "Computer Wins!";
-    resultmessageDisplay.style.color = "skyblue";
-    resultmessageDisplay.style.textAlign = "right";
+    ResultMsgText.textContent = "Computer Wins!";
+    ResultMsgText.style.color = "skyblue";
+    ResultMsgText.style.textAlign = "right";
   }
   function playerWinFunc() {
     playerScore++;
     playerScoreDisplay.textContent = playerScore;
-    resultmessageDisplay.textContent = "You Win!👍";
-    resultmessageDisplay.style.color = "Yellow";
-    resultmessageDisplay.style.textAlign = "left";
+    ResultMsgText.textContent = "You Win!👍";
+    ResultMsgText.style.color = "Yellow";
+    ResultMsgText.style.textAlign = "left";
   }
   function drawFun() {
-    resultmessageDisplay.style.color = "yellow";
-    resultmessageDisplay.style.textAlign = "center";
-    resultmessageDisplay.textContent = "==========Match Draw==========";
+    ResultMsgText.style.color = "yellow";
+    ResultMsgText.style.textAlign = "center";
+    ResultMsgText.textContent = "==========Match Draw==========";
     drawScore++;
     drawScoreDisplay.textContent = drawScore;
   }
@@ -254,7 +252,7 @@ window.addEventListener("DOMContentLoaded", () => {
     } else if (msg == loseMsg) {
       computerFinalScore++;
       computerFinalResultDisplay.textContent = computerFinalScore;
-    } else if (msg == timeOutMsg) { 
+    } else if (msg == timeOutMsg) {
       computerFinalScore++;
       computerFinalResultDisplay.textContent = computerFinalScore;
     }
@@ -291,7 +289,7 @@ window.addEventListener("DOMContentLoaded", () => {
     computerScoreDisplay.textContent = computerScore;
     drawScoreDisplay.textContent = drawScore;
     clickCountDisplay.textContent = totalClicks;
-    resultmessageDisplay.textContent = "--------------";
+    ResultMsgText.textContent = "--------------";
     finalResulMsgtDisplay.textContent = "";
     playerChoiceDisplay.textContent = "--------";
     computerChoiceDisplay.textContent = "--------";
