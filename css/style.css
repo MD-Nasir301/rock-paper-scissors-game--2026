@@ -9,8 +9,10 @@
   user-select: none;
 }
 img {
+
   user-drag: none;
   -webkit-user-drag: none;
+
 }
 
 p,

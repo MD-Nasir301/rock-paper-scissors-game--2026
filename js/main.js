@@ -54,6 +54,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // GAME ONLOAD CONFIGURATION
   newGameBtn.disabled = true;
+
   navBar.style.setProperty("--settingsMsg", `"Settings"`);
   timerDisplay.style.setProperty("--timeLeftValue", `"100"`);
 
@@ -153,6 +154,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
   // End of Game Logic --------------
+
 
   // Background Music Toggle
   btnBgMusic.addEventListener("click", () => {
